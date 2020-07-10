@@ -10,10 +10,8 @@ services:
     - mongodb 
     - redis
 
-# or  执行脚本前 
-# before_script: npm i
-# 指定安装脚本
-install: 
+# 执行脚本前 install: npm i 也能达到一样的效果
+before_script: 
     - npm i
 
 #运行的脚本命令
