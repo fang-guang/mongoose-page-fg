@@ -24,7 +24,7 @@ notifications:
     email:
         recipients:
             - fangguang_emaill@163.com
-        on_success: change # default: change
+        on_success: always # default: change
         on_failure: always # default: always
 
 # 上传成功后 
