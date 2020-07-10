@@ -1,6 +1,6 @@
 {
   "name": "paging-mongoose-fg",
-  "version": "0.1.2",
+  "version": "1.1.2",
   "description": "paging by mongoose",
   "main": "index.js",
   "scripts": {
@@ -8,6 +8,10 @@
     "cov": "nyc report --reporter=html",
     "test": "nyc ava ./test/index.test.js --serial"
   },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:fang-guang/mongoose-page-fg.git"
+  },  
   "keywords": [
     "mongoose",
     "plugin",
