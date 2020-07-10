@@ -13,6 +13,7 @@ npm i -S paging-mongoose-fg
 ```
 
 ## Usage
+
 ### support defeat limit 30, page defeat 1
     await model.paging({});
 ### support json string query
