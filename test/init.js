@@ -4,7 +4,7 @@ const mongoose = require('mongoose');
 
 const mpaging = require('../index.js');
 
-const db = mongoose.createConnection('mongodb://localhost/testcollection');
+const db = mongoose.createConnection('mongodb://localhost/test_collection_of_mongo_fg');
 const schema = new mongoose.Schema({ name: String });
 schema.plugin(mpaging);
 

@@ -1,13 +1,14 @@
-const { default: test } = require('ava');
+const test = require('ava');
+
 const { model, dropCollection, insetDoc } = require('./init.js');
 
 // 插入100条数据
-test.beforeEach(async () => {
+test.before(async () => {
   await insetDoc();
 });
 
 // 测试完删除db
-test.afterEach(async () => {
+test.after(async () => {
   await dropCollection();
 });
 
