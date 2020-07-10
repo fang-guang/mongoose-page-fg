@@ -10,8 +10,10 @@ services:
     - mongodb 
     - redis
 
-# 执行脚本前
-before_script:
+# or  执行脚本前 
+# before_script: npm i
+# 指定安装脚本
+install: 
     - npm i
 
 #运行的脚本命令
@@ -32,7 +34,7 @@ after_success:
     - npm run nyc:cov
 
 # 失败后删除数据库
-afterfailure: 
+after_failure: 
     - node -pe "require('./test/init.js').dropCollection()"
 
 #指定分支，只有指定的分支提交时才会运行脚本
