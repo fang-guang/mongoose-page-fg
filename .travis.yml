@@ -1,11 +1,11 @@
-#指定运行环境
+# 指定运行环境
 language: node_js
 
-#指定nodejs版本，可以指定多个
+# 指定nodejs版本，可以指定多个
 node_js:
     - "12.13.0"
 
-# 测试需要的数据库
+# 需要的数据库
 services: 
     - mongodb 
     - redis
@@ -14,7 +14,7 @@ services:
 before_script: 
     - npm i
 
-#运行的脚本命令
+# 运行的脚本命令
 script:
     - npm run lint
     - npm run test
@@ -31,11 +31,11 @@ notifications:
 after_success:
     - npm run nyc:cov
 
-# 失败后删除数据库
+# 测试用例失败后删除数据库
 after_failure: 
     - node -pe "require('./test/init.js').dropCollection()"
 
-#指定分支，只有指定的分支提交时才会运行脚本
+# 指定分支，只有指定的分支提交时才会运行脚本
 branches:
   only:
     - master
