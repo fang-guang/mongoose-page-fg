@@ -29,9 +29,8 @@ notifications:
 
 # 上传成功后 
 after_success:
-    - npm run cov
     - npm run nyc:cov
-
+    - npm run cov
 # 测试用例失败后删除数据库
 after_failure: 
     - node -pe "require('./test/init.js').dropCollection()"
