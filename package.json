@@ -1,12 +1,13 @@
 {
   "name": "paging-mongoose-fg",
-  "version": "1.2.4",
+  "version": "1.2.7",
   "description": "paging by mongoose",
   "main": "index.js",
   "scripts": {
-    "lint": "eslint cache.js index.js ./test/init.js",
-    "nyc:cov": "nyc ava ./test/index.test.js -v && nyc report --reporter=html",
-    "test": "ava ./test/index.test.js"
+    "lint": "eslint cache.js index.js ./test/*.js",
+    "cov": "nyc report --reporter=text-summary",
+    "nyc:cov": "nyc ava ./test/*.test.js && nyc report --reporter=html",
+    "test": "ava ./test/*.test.js"
   },
   "repository": {
     "type": "git",

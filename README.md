@@ -11,16 +11,26 @@ Installation
 ```shell
 npm i -S paging-mongoose-fg
 ```
+## quotoe
+```javascript
+      const mpaging = require('paging-mongoose-fg')
+      schema.plugin(mpaging);
+```
 
 ## Usage
 
 ### support defeat limit 30, page defeat 1
+```javascript    
     await model.paging({});
+```
 ### support json string query
+```javascript
     await model.paging({
         query: '{"name":"fg"}',
   });
+```
 ### support select, sort, skip, lean, limit payload
+```javascript
     await model.paging({
         payload: {
             limit: 10,
@@ -35,7 +45,9 @@ npm i -S paging-mongoose-fg
             lean: true,
         },
   });
+```
 ### support redis cache total number
+```javascript
     await model.paging({
         cachePayload: {
             redis: {
@@ -47,7 +59,7 @@ npm i -S paging-mongoose-fg
         expire: 1 * 60,
     },
 })
-
+```
 
 example
 
