@@ -1,12 +1,12 @@
 {
   "name": "paging-mongoose-fg",
-  "version": "1.2.7",
+  "version": "1.2.8",
   "description": "paging by mongoose",
   "main": "index.js",
   "scripts": {
     "lint": "eslint cache.js index.js ./test/*.js",
-    "cov": "nyc report --reporter=text-summary",
-    "nyc:cov": "nyc ava ./test/*.test.js && nyc report --reporter=html",
+    "cov": "node_modules/.bin/nyc report --reporter=text-summary",
+    "nyc:cov": "node_modules/.bin/nyc ava ./test/*.test.js && nyc report --reporter=html",
     "test": "ava ./test/*.test.js"
   },
   "repository": {
@@ -33,6 +33,7 @@
     "eslint": "^7.4.0",
     "eslint-config-airbnb-base": "^14.2.0",
     "eslint-plugin-import": "^2.22.0",
-    "mongoose": "^5.9.22"
+    "mongoose": "^5.9.22",
+    "nyc": "^15.1.0"
   }
 }
