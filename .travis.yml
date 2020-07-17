@@ -10,8 +10,7 @@ services:
     - mongodb 
     - redis
 
-# 执行脚本前 install: npm i 也能达到一样的效果
-before_script: 
+install: 
     - npm i
 
 # 运行的脚本命令
@@ -31,6 +30,7 @@ notifications:
 after_success:
     - npm run nyc:cov
     - npm run cov
+
 # 测试用例失败后删除数据库
 after_failure: 
     - node -pe "require('./test/init.js').dropCollection()"
