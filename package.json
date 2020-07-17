@@ -24,7 +24,7 @@
     "ajv": "^6.12.2",
     "boom": "^7.3.0",
     "ioredis": "^4.17.3",
-    "lodash": "^4.17.15"
+    "lodash": "^4.17.19"
   },
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^3.5.0",
