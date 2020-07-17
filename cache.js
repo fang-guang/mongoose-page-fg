@@ -11,7 +11,7 @@ module.exports = (({ payload = {}, key, getPathNum }) => {
     redis: {
       host: '127.0.0.1',
       port: '6379',
-      db: '6',
+      db: 12,
     },
     prefix: 'total_count_cache_',
     expire: 5 * 60,

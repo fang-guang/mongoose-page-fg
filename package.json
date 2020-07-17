@@ -1,6 +1,6 @@
 {
   "name": "paging-mongoose-fg",
-  "version": "1.3.0",
+  "version": "1.3.1",
   "description": "A maging plugin of mongoose",
   "main": "index.js",
   "scripts": {

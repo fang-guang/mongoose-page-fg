@@ -12,6 +12,23 @@ test.after(async () => {
   await dropCollection();
 });
 
+test('throw error when param inconformity rule', async (t) => {
+  await t.throwsAsync(async () => {
+    await model.paging({
+      payload: {
+        limit: 10,
+        page: 3,
+        select: { name: 1, _id: 0 },
+        sort: { _id: -1 },
+        lean: true,
+      },
+      cachePayload: {
+        redis: { host: '127.0.', db: '5' },
+      },
+    }, { message: 'data.cachePayload.redis.host should match format "ipv4"' });
+  });
+});
+
 test('support defeat limit 30, page defeat 1', async (t) => {
   const {
     data,

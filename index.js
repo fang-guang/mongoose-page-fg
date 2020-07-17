@@ -1,9 +1,13 @@
+'ajv写死了传参规则，当前索引页数，2个promise，一个当前的页码的数量，数据，另一个所有的页码数，总数量（redis缓存）';
+
 const _ = require('lodash');
 const Ajv = require('ajv');
 const Boom = require('boom');
 const cache = require('./cache.js');
 
 const ajv = new Ajv({
+  // 检查收集所有错误的所有规则
+  allErrors: true,
   // 给属性和items加上默认值
   useDefaults: true,
   // 强制数据类型强制转化为type指定类型
@@ -33,7 +37,7 @@ const getSparseResult = (options) => {
  * 返回总页数，以及总数量
  * @param {Object} options
  * @param {Object} options.limit 限制的数量
- * @param {Object} options.countP db.count({consition})
+ * @param {Object} options.countP model.countDocuments({consition})
  */
 const totalCount = async (options) => {
   const { skip, limit, countP } = options;
@@ -85,16 +89,41 @@ const getResult = (options) => {
   }));
 };
 
-const optsSchema = {
+const needVerifySchema = {
   type: 'object',
   properties: {
-    lean: { type: 'boolean', default: true },
-    page: { type: 'number', minimum: 1, default: 1 },
-    limit: {
-      type: 'number', minumum: 1, maxumum: 100, default: 30,
+    payload: {
+      type: 'object',
+      properties: {
+        lean: { type: 'boolean', default: true },
+        page: { type: 'number', minimum: 1, default: 1 },
+        limit: {
+          type: 'number', minimum: 1, maximum: 100, default: 30,
+        },
+        select: { $ref: '#/definitions/stringOrObject' },
+        sort: { $ref: '#/definitions/stringOrObject' },
+      },
     },
-    select: { $ref: '#/definitions/stringOrObject' },
-    sort: { $ref: '#/definitions/stringOrObject' },
+    cachePayload: {
+      type: 'object',
+      properties: {
+        expire: { type: 'number' },
+        prefix: { type: 'string' },
+        redis: {
+          type: 'object',
+          properties: {
+            host: { type: 'string', format: 'ipv4' },
+            port: { type: 'string' },
+            // 测试用例会有清空操作，不采用常用的redis db
+            db: {
+              type: 'number', minimum: 3, maximum: 15,
+            },
+          },
+        },
+        select: { $ref: '#/definitions/stringOrObject' },
+        sort: { $ref: '#/definitions/stringOrObject' },
+      },
+    },
   },
   definitions: {
     stringOrObject: {
@@ -120,17 +149,17 @@ const optsSchema = {
  *    })
  */
 module.exports = (schema) => {
-  const optsValidate = ajv.compile(optsSchema);
+  const optsValidate = ajv.compile(needVerifySchema);
 
   schema.statics.paging = function paging({ query = {}, payload = {}, cachePayload = {} }) {
-    if (!optsValidate(payload)) {
+    if (!optsValidate({ payload, cachePayload })) {
       const errorMsg = ajv.errorsText(optsValidate.errors);
-      return Promise.reject(new Error(errorMsg));
+      throw Boom.badRequest(errorMsg);
     }
     const findConditions = typeof query === 'string' ? JSON.parse(query) : query;
 
     const dataP = this.find(findConditions);
-    const countP = this.count(findConditions);
+    const countP = this.countDocuments(findConditions);
     // model + query + limit 确保一致性
     const totalCountKey = this.modelName + JSON.stringify(query) + payload.limit;
     // 将传入的path参数转化为skip,参数若传递参数有page则skip page * limit 的数量
